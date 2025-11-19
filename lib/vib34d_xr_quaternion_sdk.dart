@@ -57,5 +57,8 @@ export 'src/sensors/sensory_input_bridge.dart';
 // Visualization
 export 'src/visualization/shader_quaternion_synchronizer.dart';
 
+// Test utilities (for development and testing)
+export 'src/test_utils/test_utils.dart';
+
 // Re-export vector_math for convenience
 export 'package:vector_math/vector_math.dart' show Quaternion, Vector3, Vector4, Matrix4;

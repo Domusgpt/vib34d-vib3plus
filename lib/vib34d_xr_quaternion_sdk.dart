@@ -57,6 +57,17 @@ export 'src/sensors/sensory_input_bridge.dart';
 // Visualization
 export 'src/visualization/shader_quaternion_synchronizer.dart';
 
+// Input adapters (for non-AR use cases: web, desktop, mobile)
+export 'src/input/mouse_input_adapter.dart';
+export 'src/input/touch_input_adapter.dart';
+export 'src/input/gamepad_input_adapter.dart';
+export 'src/input/keyboard_input_adapter.dart';
+export 'src/input/device_motion_adapter.dart';
+
+// Web visualization utilities
+export 'src/web/web_visualization_helper.dart';
+export 'src/web/canvas_renderer.dart';
+
 // Test utilities (for development and testing)
 export 'src/test_utils/test_utils.dart';
 

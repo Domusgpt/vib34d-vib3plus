@@ -18,9 +18,9 @@ class QuaternionFieldService {
   QuaternionFieldService({
     this.energySmoothing = 0.35,
     this.velocityReference = 8.0,
-  })  : _state = QuaternionState.initial(),
-        _lastPrimary = Quaternion.identity(),
-        _lastTimestamp = 0;
+  }) : _state = QuaternionState.initial(),
+       _lastPrimary = Quaternion.identity(),
+       _lastTimestamp = 0;
 
   /// Subscribe to quaternion field updates
   Stream<QuaternionSnapshot> get stream => _controller.stream;
@@ -55,10 +55,7 @@ class QuaternionFieldService {
   }
 
   /// Ingest secondary quaternion (e.g., from secondary sensor)
-  void ingestSecondaryQuaternion(
-    Quaternion quaternion, {
-    String? source,
-  }) {
+  void ingestSecondaryQuaternion(Quaternion quaternion, {String? source}) {
     final normalized = QuaternionUtils.normalize(quaternion);
 
     _state = QuaternionState(
@@ -134,22 +131,30 @@ class QuaternionFieldService {
       return 0.0;
     }
 
-    final deltaQuat =
-        QuaternionUtils.multiply(quaternion, QuaternionUtils.conjugate(_lastPrimary));
-    final angle = 2.0 *
+    final deltaQuat = QuaternionUtils.multiply(
+      quaternion,
+      QuaternionUtils.conjugate(_lastPrimary),
+    );
+    final angle =
+        2.0 *
         math.atan2(
-          math.sqrt(deltaQuat.x * deltaQuat.x +
-              deltaQuat.y * deltaQuat.y +
-              deltaQuat.z * deltaQuat.z),
+          math.sqrt(
+            deltaQuat.x * deltaQuat.x +
+                deltaQuat.y * deltaQuat.y +
+                deltaQuat.z * deltaQuat.z,
+          ),
           deltaQuat.w,
         );
 
     final deltaTimeSeconds = (timestamp - _lastTimestamp) / 1000.0;
     final angularVelocity = angle.abs() / math.max(0.001, deltaTimeSeconds);
-    final instantaneousEnergy =
-        math.min(1.0, angularVelocity / velocityReference);
+    final instantaneousEnergy = math.min(
+      1.0,
+      angularVelocity / velocityReference,
+    );
 
-    final smoothedEnergy = _state.motionEnergy +
+    final smoothedEnergy =
+        _state.motionEnergy +
         (instantaneousEnergy - _state.motionEnergy) * energySmoothing;
 
     _lastPrimary = quaternion;

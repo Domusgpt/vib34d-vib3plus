@@ -45,7 +45,8 @@ class MockARSession {
     // Simulate realistic confidence (0.7-0.95)
     final baseConfidence = 0.7;
     final confidenceVariation = 0.25;
-    final confidence = baseConfidence +
+    final confidence =
+        baseConfidence +
         math.sin(_time * 2.3) * confidenceVariation * 0.5 +
         confidenceVariation * 0.5;
 
@@ -72,11 +73,13 @@ class MockARSession {
         math.sin(angle) * radius,
       );
 
-      anchors.add(XRPose(
-        orientation: orientation,
-        position: position,
-        confidence: 0.6 + _random.nextDouble() * 0.3,
-      ));
+      anchors.add(
+        XRPose(
+          orientation: orientation,
+          position: position,
+          confidence: 0.6 + _random.nextDouble() * 0.3,
+        ),
+      );
     }
 
     bridge.publishSpatialAnchors(
@@ -134,11 +137,13 @@ class TestSDKFactory {
     QuaternionFieldService quaternionService,
     ShaderQuaternionSynchronizer synchronizer,
     MockARSession mockSession,
-  }) createMockSDK({
+  })
+  createMockSDK({
     double energySmoothing = 0.35,
     double velocityReference = 8.0,
     double rotationScale = 2.0,
-    void Function(String system, Map<String, double> parameters)? onSystemUpdate,
+    void Function(String system, Map<String, double> parameters)?
+    onSystemUpdate,
   }) {
     final bridge = SensoryInputBridge(channelHistoryLimit: 12);
 

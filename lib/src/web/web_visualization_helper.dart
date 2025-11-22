@@ -204,7 +204,8 @@ class PerformanceMetrics {
   /// Get current FPS
   double get fps {
     if (_frameTimes.isEmpty) return 0.0;
-    final avgFrameTime = _frameTimes.reduce((a, b) => a + b) / _frameTimes.length;
+    final avgFrameTime =
+        _frameTimes.reduce((a, b) => a + b) / _frameTimes.length;
     return avgFrameTime > 0 ? 1000.0 / avgFrameTime : 0.0;
   }
 
@@ -288,7 +289,8 @@ class WebVisualizationHelper {
     callback(deltaTime);
 
     // Record performance
-    final frameTime = DateTime.now().difference(frameStartTime).inMicroseconds / 1000.0;
+    final frameTime =
+        DateTime.now().difference(frameStartTime).inMicroseconds / 1000.0;
     metrics.recordFrame(frameTime);
 
     // Schedule next frame
@@ -325,7 +327,11 @@ class WebVisualizationHelper {
   Point2D get center => Point2D(canvasWidth / 2, canvasHeight / 2);
 
   /// Project 3D point to 2D canvas coordinates
-  Point2D project3DTo2D(Vector3 point3d, {double scale = 200.0, double perspective = 500.0}) {
+  Point2D project3DTo2D(
+    Vector3 point3d, {
+    double scale = 200.0,
+    double perspective = 500.0,
+  }) {
     final factor = perspective / (perspective + point3d.z);
     final x = point3d.x * factor * scale + canvasWidth / 2;
     final y = point3d.y * factor * scale + canvasHeight / 2;
@@ -380,6 +386,11 @@ class WebVisualizationHelper {
 
   /// Calculate distance from camera (for depth sorting)
   double getDepth(Point4D point) {
-    return math.sqrt(point.x * point.x + point.y * point.y + point.z * point.z + point.w * point.w);
+    return math.sqrt(
+      point.x * point.x +
+          point.y * point.y +
+          point.z * point.z +
+          point.w * point.w,
+    );
   }
 }

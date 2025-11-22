@@ -22,11 +22,7 @@ class XRPose {
   final Vector3? position;
   final double? confidence;
 
-  const XRPose({
-    required this.orientation,
-    this.position,
-    this.confidence,
-  });
+  const XRPose({required this.orientation, this.position, this.confidence});
 }
 
 /// Sensory input bridge for XR sensor data
@@ -39,9 +35,7 @@ class SensoryInputBridge {
   final Map<String, List<SensorEvent>> _history = {};
   final int channelHistoryLimit;
 
-  SensoryInputBridge({
-    this.channelHistoryLimit = 12,
-  });
+  SensoryInputBridge({this.channelHistoryLimit = 12});
 
   /// Subscribe to a sensor channel
   Stream<SensorEvent> subscribe(String channel) {
@@ -96,9 +90,7 @@ class SensoryInputBridge {
     String source = 'ar-anchors',
   }) {
     final event = SensorEvent(
-      payload: {
-        'anchors': anchors,
-      },
+      payload: {'anchors': anchors},
       confidence: confidence ?? 1.0,
       timestamp: DateTime.now().millisecondsSinceEpoch,
       source: source,
@@ -114,9 +106,7 @@ class SensoryInputBridge {
     String source = 'ar-hittest',
   }) {
     final event = SensorEvent(
-      payload: {
-        'results': results,
-      },
+      payload: {'results': results},
       confidence: confidence ?? 1.0,
       timestamp: DateTime.now().millisecondsSinceEpoch,
       source: source,

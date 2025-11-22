@@ -52,8 +52,8 @@ class GamepadInputConfig {
     this.invertX = false,
     this.smoothing = 0.1,
     this.buttonMap = const {
-      0: 'reset',        // A button (Xbox) / Cross (PS)
-      1: 'togglePause',  // B button (Xbox) / Circle (PS)
+      0: 'reset', // A button (Xbox) / Cross (PS)
+      1: 'togglePause', // B button (Xbox) / Circle (PS)
     },
   });
 }
@@ -110,10 +110,8 @@ class GamepadInputAdapter {
   // Button press tracking (for edge detection)
   List<bool> _lastButtonStates = [];
 
-  GamepadInputAdapter({
-    required this.bridge,
-    GamepadInputConfig? config,
-  }) : config = config ?? const GamepadInputConfig();
+  GamepadInputAdapter({required this.bridge, GamepadInputConfig? config})
+    : config = config ?? const GamepadInputConfig();
 
   /// Start publishing gamepad-based quaternions
   void start() {
@@ -180,11 +178,7 @@ class GamepadInputAdapter {
 
   /// Get current rotation as Euler angles
   EulerAngles getCurrentEuler() {
-    return EulerAngles(
-      roll: _rotationZ,
-      pitch: _rotationX,
-      yaw: _rotationY,
-    );
+    return EulerAngles(roll: _rotationZ, pitch: _rotationX, yaw: _rotationY);
   }
 
   /// Get current rotation as quaternion
@@ -218,12 +212,14 @@ class GamepadInputAdapter {
     }
 
     // Apply smoothing
-    _smoothedRotX = _smoothedRotX * (1.0 - config.smoothing) +
-                    pitchInput * config.smoothing;
-    _smoothedRotY = _smoothedRotY * (1.0 - config.smoothing) +
-                    (yawInput + yawFineInput) * config.smoothing;
-    _smoothedRotZ = _smoothedRotZ * (1.0 - config.smoothing) +
-                    rollInput * config.smoothing;
+    _smoothedRotX =
+        _smoothedRotX * (1.0 - config.smoothing) +
+        pitchInput * config.smoothing;
+    _smoothedRotY =
+        _smoothedRotY * (1.0 - config.smoothing) +
+        (yawInput + yawFineInput) * config.smoothing;
+    _smoothedRotZ =
+        _smoothedRotZ * (1.0 - config.smoothing) + rollInput * config.smoothing;
 
     // Update rotation
     _rotationX += _smoothedRotX;
@@ -241,7 +237,11 @@ class GamepadInputAdapter {
     }
 
     // Check for button presses (edge detection)
-    for (int i = 0; i < state.buttons.length && i < _lastButtonStates.length; i++) {
+    for (
+      int i = 0;
+      i < state.buttons.length && i < _lastButtonStates.length;
+      i++
+    ) {
       final pressed = state.buttons[i];
       final wasPressed = _lastButtonStates[i];
 

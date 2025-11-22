@@ -89,10 +89,8 @@ class DeviceMotionAdapter {
   bool _isStarted = false;
   bool _isCalibrated = false;
 
-  DeviceMotionAdapter({
-    required this.bridge,
-    DeviceMotionConfig? config,
-  }) : config = config ?? const DeviceMotionConfig();
+  DeviceMotionAdapter({required this.bridge, DeviceMotionConfig? config})
+    : config = config ?? const DeviceMotionConfig();
 
   /// Start publishing device motion-based quaternions
   void start() {
@@ -126,7 +124,12 @@ class DeviceMotionAdapter {
   ///   );
   /// });
   /// ```
-  void updateFromGyroscope(double x, double y, double z, {double deltaTime = 0.016}) {
+  void updateFromGyroscope(
+    double x,
+    double y,
+    double z, {
+    double deltaTime = 0.016,
+  }) {
     if (!_isStarted) return;
 
     // Apply sensitivity
@@ -256,11 +259,7 @@ class DeviceMotionAdapter {
 
   /// Get current rotation as Euler angles
   EulerAngles getCurrentEuler() {
-    return EulerAngles(
-      roll: _smoothedZ,
-      pitch: _smoothedX,
-      yaw: _smoothedY,
-    );
+    return EulerAngles(roll: _smoothedZ, pitch: _smoothedX, yaw: _smoothedY);
   }
 
   /// Get current rotation as quaternion
@@ -271,9 +270,12 @@ class DeviceMotionAdapter {
   void _applySmoothing() {
     // Exponential moving average
     final smoothingFactor = config.smoothing;
-    _smoothedX = _smoothedX * (1.0 - smoothingFactor) + _rotationX * smoothingFactor;
-    _smoothedY = _smoothedY * (1.0 - smoothingFactor) + _rotationY * smoothingFactor;
-    _smoothedZ = _smoothedZ * (1.0 - smoothingFactor) + _rotationZ * smoothingFactor;
+    _smoothedX =
+        _smoothedX * (1.0 - smoothingFactor) + _rotationX * smoothingFactor;
+    _smoothedY =
+        _smoothedY * (1.0 - smoothingFactor) + _rotationY * smoothingFactor;
+    _smoothedZ =
+        _smoothedZ * (1.0 - smoothingFactor) + _rotationZ * smoothingFactor;
   }
 
   void _publishCurrentRotation() {

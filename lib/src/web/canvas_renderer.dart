@@ -39,10 +39,12 @@ class CanvasRenderer {
     Color color = Colors.purple,
     double strokeWidth = 2.0,
   }) {
-    final helper = _helper ?? WebVisualizationHelper(
-      canvasWidth: size.width,
-      canvasHeight: size.height,
-    );
+    final helper =
+        _helper ??
+        WebVisualizationHelper(
+          canvasWidth: size.width,
+          canvasHeight: size.height,
+        );
 
     // Generate tesseract vertices
     final vertices4D = helper.generateTesseractVertices();
@@ -69,11 +71,7 @@ class CanvasRenderer {
     for (final edge in edges) {
       final p1 = points2D[edge[0]];
       final p2 = points2D[edge[1]];
-      canvas.drawLine(
-        Offset(p1.x, p1.y),
-        Offset(p2.x, p2.y),
-        paint,
-      );
+      canvas.drawLine(Offset(p1.x, p1.y), Offset(p2.x, p2.y), paint);
     }
 
     // Draw vertices
@@ -82,11 +80,7 @@ class CanvasRenderer {
       ..style = PaintingStyle.fill;
 
     for (final point in points2D) {
-      canvas.drawCircle(
-        Offset(point.x, point.y),
-        3.0,
-        vertexPaint,
-      );
+      canvas.drawCircle(Offset(point.x, point.y), 3.0, vertexPaint);
     }
   }
 
@@ -100,10 +94,12 @@ class CanvasRenderer {
     int rings = 15,
     double baseHue = 200.0,
   }) {
-    final helper = _helper ?? WebVisualizationHelper(
-      canvasWidth: size.width,
-      canvasHeight: size.height,
-    );
+    final helper =
+        _helper ??
+        WebVisualizationHelper(
+          canvasWidth: size.width,
+          canvasHeight: size.height,
+        );
 
     // Generate sphere vertices
     final vertices4D = helper.generateSphereVertices(
@@ -178,10 +174,12 @@ class CanvasRenderer {
     Color color = Colors.white24,
     double strokeWidth = 1.0,
   }) {
-    final helper = _helper ?? WebVisualizationHelper(
-      canvasWidth: size.width,
-      canvasHeight: size.height,
-    );
+    final helper =
+        _helper ??
+        WebVisualizationHelper(
+          canvasWidth: size.width,
+          canvasHeight: size.height,
+        );
 
     final paint = Paint()
       ..color = color
@@ -193,13 +191,21 @@ class CanvasRenderer {
     // Draw grid lines in XY plane
     for (int i = -halfGrid; i <= halfGrid; i++) {
       // Horizontal lines
-      final start4D = Point4D(i * spacing / 100, -halfGrid * spacing / 100, 0, 0);
+      final start4D = Point4D(
+        i * spacing / 100,
+        -halfGrid * spacing / 100,
+        0,
+        0,
+      );
       final end4D = Point4D(i * spacing / 100, halfGrid * spacing / 100, 0, 0);
 
       final startRotated = start4D.rotate4D(rotations);
       final endRotated = end4D.rotate4D(rotations);
 
-      final start2D = helper.project3DTo2D(startRotated.projectTo3D(), scale: 100);
+      final start2D = helper.project3DTo2D(
+        startRotated.projectTo3D(),
+        scale: 100,
+      );
       final end2D = helper.project3DTo2D(endRotated.projectTo3D(), scale: 100);
 
       canvas.drawLine(
@@ -209,14 +215,25 @@ class CanvasRenderer {
       );
 
       // Vertical lines
-      final vStart4D = Point4D(-halfGrid * spacing / 100, i * spacing / 100, 0, 0);
+      final vStart4D = Point4D(
+        -halfGrid * spacing / 100,
+        i * spacing / 100,
+        0,
+        0,
+      );
       final vEnd4D = Point4D(halfGrid * spacing / 100, i * spacing / 100, 0, 0);
 
       final vStartRotated = vStart4D.rotate4D(rotations);
       final vEndRotated = vEnd4D.rotate4D(rotations);
 
-      final vStart2D = helper.project3DTo2D(vStartRotated.projectTo3D(), scale: 100);
-      final vEnd2D = helper.project3DTo2D(vEndRotated.projectTo3D(), scale: 100);
+      final vStart2D = helper.project3DTo2D(
+        vStartRotated.projectTo3D(),
+        scale: 100,
+      );
+      final vEnd2D = helper.project3DTo2D(
+        vEndRotated.projectTo3D(),
+        scale: 100,
+      );
 
       canvas.drawLine(
         Offset(vStart2D.x, vStart2D.y),
@@ -238,15 +255,15 @@ class CanvasRenderer {
     double strokeWidth = 2.0,
     bool showVertices = true,
   }) {
-    final helper = _helper ?? WebVisualizationHelper(
-      canvasWidth: size.width,
-      canvasHeight: size.height,
-    );
+    final helper =
+        _helper ??
+        WebVisualizationHelper(
+          canvasWidth: size.width,
+          canvasHeight: size.height,
+        );
 
     // Rotate vertices
-    final rotatedVertices = vertices
-        .map((v) => v.rotate4D(rotations))
-        .toList();
+    final rotatedVertices = vertices.map((v) => v.rotate4D(rotations)).toList();
 
     // Project to 2D
     final points2D = rotatedVertices
@@ -264,11 +281,7 @@ class CanvasRenderer {
 
       final p1 = points2D[edge[0]];
       final p2 = points2D[edge[1]];
-      canvas.drawLine(
-        Offset(p1.x, p1.y),
-        Offset(p2.x, p2.y),
-        edgePaint,
-      );
+      canvas.drawLine(Offset(p1.x, p1.y), Offset(p2.x, p2.y), edgePaint);
     }
 
     // Draw vertices
@@ -278,11 +291,7 @@ class CanvasRenderer {
         ..style = PaintingStyle.fill;
 
       for (final point in points2D) {
-        canvas.drawCircle(
-          Offset(point.x, point.y),
-          3.0,
-          vertexPaint,
-        );
+        canvas.drawCircle(Offset(point.x, point.y), 3.0, vertexPaint);
       }
     }
   }
@@ -319,12 +328,10 @@ class CanvasRenderer {
       [0, 1], [1, 3], [3, 2], [2, 0], // Bottom face
       [4, 5], [5, 7], [7, 6], [6, 4], // Top face
       [0, 4], [1, 5], [2, 6], [3, 7], // Vertical edges
-
       // Outer cube edges
       [8, 9], [9, 11], [11, 10], [10, 8], // Bottom face
       [12, 13], [13, 15], [15, 14], [14, 12], // Top face
       [8, 12], [9, 13], [10, 14], [11, 15], // Vertical edges
-
       // Connections between inner and outer cubes
       [0, 8], [1, 9], [2, 10], [3, 11],
       [4, 12], [5, 13], [6, 14], [7, 15],

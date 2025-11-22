@@ -72,4 +72,5 @@ export 'src/web/canvas_renderer.dart';
 export 'src/test_utils/test_utils.dart';
 
 // Re-export vector_math for convenience
-export 'package:vector_math/vector_math.dart' show Quaternion, Vector3, Vector4, Matrix4;
+export 'package:vector_math/vector_math.dart'
+    show Quaternion, Vector3, Vector4, Matrix4;

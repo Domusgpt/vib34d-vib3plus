@@ -127,10 +127,8 @@ class KeyboardInputAdapter {
   bool _isStarted = false;
   DateTime? _lastUpdateTime;
 
-  KeyboardInputAdapter({
-    required this.bridge,
-    KeyboardInputConfig? config,
-  }) : config = config ?? const KeyboardInputConfig();
+  KeyboardInputAdapter({required this.bridge, KeyboardInputConfig? config})
+    : config = config ?? const KeyboardInputConfig();
 
   /// Start publishing keyboard-based quaternions
   void start() {
@@ -218,11 +216,7 @@ class KeyboardInputAdapter {
 
   /// Get current rotation as Euler angles
   EulerAngles getCurrentEuler() {
-    return EulerAngles(
-      roll: _rotationZ,
-      pitch: _rotationX,
-      yaw: _rotationY,
-    );
+    return EulerAngles(roll: _rotationZ, pitch: _rotationX, yaw: _rotationY);
   }
 
   /// Get current rotation as quaternion

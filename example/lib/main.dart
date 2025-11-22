@@ -76,7 +76,9 @@ class _QuaternionDemoState extends State<QuaternionDemo> {
   }
 
   void _startSimulation() {
-    _simulationTimer = Timer.periodic(const Duration(milliseconds: 16), (timer) {
+    _simulationTimer = Timer.periodic(const Duration(milliseconds: 16), (
+      timer,
+    ) {
       // Simulate AR tracking with rotating quaternion
       final time = timer.tick * 0.016; // seconds
       final roll = math.sin(time * 0.5) * 0.3;
@@ -84,13 +86,17 @@ class _QuaternionDemoState extends State<QuaternionDemo> {
       final yaw = math.sin(time * 0.3) * 0.5;
 
       // Convert Euler to quaternion
-      final qx = math.sin(roll / 2) * math.cos(pitch / 2) * math.cos(yaw / 2) -
+      final qx =
+          math.sin(roll / 2) * math.cos(pitch / 2) * math.cos(yaw / 2) -
           math.cos(roll / 2) * math.sin(pitch / 2) * math.sin(yaw / 2);
-      final qy = math.cos(roll / 2) * math.sin(pitch / 2) * math.cos(yaw / 2) +
+      final qy =
+          math.cos(roll / 2) * math.sin(pitch / 2) * math.cos(yaw / 2) +
           math.sin(roll / 2) * math.cos(pitch / 2) * math.sin(yaw / 2);
-      final qz = math.cos(roll / 2) * math.cos(pitch / 2) * math.sin(yaw / 2) -
+      final qz =
+          math.cos(roll / 2) * math.cos(pitch / 2) * math.sin(yaw / 2) -
           math.sin(roll / 2) * math.sin(pitch / 2) * math.cos(yaw / 2);
-      final qw = math.cos(roll / 2) * math.cos(pitch / 2) * math.cos(yaw / 2) +
+      final qw =
+          math.cos(roll / 2) * math.cos(pitch / 2) * math.cos(yaw / 2) +
           math.sin(roll / 2) * math.sin(pitch / 2) * math.sin(yaw / 2);
 
       final quaternion = Quaternion(qx, qy, qz, qw);
@@ -197,10 +203,7 @@ class _QuaternionDemoState extends State<QuaternionDemo> {
                     Text(
                       'Geometry ${_geometryIndex + 1} of 24',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey[600],
-                      ),
+                      style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                     ),
                   ],
                 ),
@@ -247,12 +250,30 @@ class _QuaternionDemoState extends State<QuaternionDemo> {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    _buildParameterRow('XY Plane', _currentRotations['rot4dXY']),
-                    _buildParameterRow('XZ Plane', _currentRotations['rot4dXZ']),
-                    _buildParameterRow('YZ Plane', _currentRotations['rot4dYZ']),
-                    _buildParameterRow('XW Plane', _currentRotations['rot4dXW']),
-                    _buildParameterRow('YW Plane', _currentRotations['rot4dYW']),
-                    _buildParameterRow('ZW Plane', _currentRotations['rot4dZW']),
+                    _buildParameterRow(
+                      'XY Plane',
+                      _currentRotations['rot4dXY'],
+                    ),
+                    _buildParameterRow(
+                      'XZ Plane',
+                      _currentRotations['rot4dXZ'],
+                    ),
+                    _buildParameterRow(
+                      'YZ Plane',
+                      _currentRotations['rot4dYZ'],
+                    ),
+                    _buildParameterRow(
+                      'XW Plane',
+                      _currentRotations['rot4dXW'],
+                    ),
+                    _buildParameterRow(
+                      'YW Plane',
+                      _currentRotations['rot4dYW'],
+                    ),
+                    _buildParameterRow(
+                      'ZW Plane',
+                      _currentRotations['rot4dZW'],
+                    ),
                   ],
                 ),
               ),
@@ -302,10 +323,7 @@ class _QuaternionDemoState extends State<QuaternionDemo> {
           Text(label, style: const TextStyle(fontSize: 14)),
           Text(
             value?.toStringAsFixed(3) ?? '0.000',
-            style: const TextStyle(
-              fontSize: 14,
-              fontFamily: 'monospace',
-            ),
+            style: const TextStyle(fontSize: 14, fontFamily: 'monospace'),
           ),
         ],
       ),

@@ -52,7 +52,8 @@ class GeometryMetadata {
   });
 
   @override
-  String toString() => 'GeometryMetadata($name, base: $baseName, core: $coreName)';
+  String toString() =>
+      'GeometryMetadata($name, base: $baseName, core: $coreName)';
 }
 
 /// Variation parameters for geometry rendering
@@ -103,13 +104,11 @@ class GeometryLibrary {
   ];
 
   static final Map<String, int> _baseIndexByKey = {
-    for (var i = 0; i < baseGeometries.length; i++)
-      baseGeometries[i].key: i,
+    for (var i = 0; i < baseGeometries.length; i++) baseGeometries[i].key: i,
   };
 
   static final Map<String, int> _coreIndexByKey = {
-    for (var i = 0; i < coreVariants.length; i++)
-      coreVariants[i].key: i,
+    for (var i = 0; i < coreVariants.length; i++) coreVariants[i].key: i,
   };
 
   /// Get base geometry index from key
@@ -237,10 +236,7 @@ class GeometryLibrary {
   /// List all geometry metadata (24 entries)
   static List<GeometryMetadata> listGeometryMetadata() {
     final total = baseGeometries.length * coreVariants.length;
-    return List.generate(
-      total,
-      (index) => describeGeometry(index)!,
-    );
+    return List.generate(total, (index) => describeGeometry(index)!);
   }
 
   /// Get variation parameters for specific geometry and level

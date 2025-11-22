@@ -88,10 +88,8 @@ class TouchInputAdapter {
   bool _isTouching = false;
   double _lastScale = 1.0;
 
-  TouchInputAdapter({
-    required this.bridge,
-    TouchInputConfig? config,
-  }) : config = config ?? const TouchInputConfig();
+  TouchInputAdapter({required this.bridge, TouchInputConfig? config})
+    : config = config ?? const TouchInputConfig();
 
   /// Start publishing touch-based quaternions
   void start() {
@@ -123,10 +121,10 @@ class TouchInputAdapter {
     if (!_isStarted) return;
 
     // Apply smoothing
-    _smoothedDeltaX = _smoothedDeltaX * (1.0 - config.smoothing) +
-                      deltaX * config.smoothing;
-    _smoothedDeltaY = _smoothedDeltaY * (1.0 - config.smoothing) +
-                      deltaY * config.smoothing;
+    _smoothedDeltaX =
+        _smoothedDeltaX * (1.0 - config.smoothing) + deltaX * config.smoothing;
+    _smoothedDeltaY =
+        _smoothedDeltaY * (1.0 - config.smoothing) + deltaY * config.smoothing;
 
     // Apply sensitivity and inversion
     double rotX = _smoothedDeltaY * config.sensitivity;
@@ -234,11 +232,7 @@ class TouchInputAdapter {
 
   /// Get current rotation as Euler angles
   EulerAngles getCurrentEuler() {
-    return EulerAngles(
-      roll: _rotationZ,
-      pitch: _rotationX,
-      yaw: _rotationY,
-    );
+    return EulerAngles(roll: _rotationZ, pitch: _rotationX, yaw: _rotationY);
   }
 
   /// Get current rotation as quaternion

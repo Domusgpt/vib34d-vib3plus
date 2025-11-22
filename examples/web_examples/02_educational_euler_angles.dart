@@ -97,9 +97,7 @@ class _EulerAnglesDemoState extends State<EulerAnglesDemo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Euler Angles Educational Visualizer'),
-      ),
+      appBar: AppBar(title: Text('Euler Angles Educational Visualizer')),
       body: RawKeyboardListener(
         focusNode: _focusNode,
         onKey: (event) {
@@ -130,57 +128,45 @@ class _EulerAnglesDemoState extends State<EulerAnglesDemo> {
                     SizedBox(height: 20),
 
                     // Quaternion display
-                    _buildSection(
-                      'Quaternion (x, y, z, w)',
-                      [
-                        'x: ${currentQuaternion.x.toStringAsFixed(3)}',
-                        'y: ${currentQuaternion.y.toStringAsFixed(3)}',
-                        'z: ${currentQuaternion.z.toStringAsFixed(3)}',
-                        'w: ${currentQuaternion.w.toStringAsFixed(3)}',
-                      ],
-                    ),
+                    _buildSection('Quaternion (x, y, z, w)', [
+                      'x: ${currentQuaternion.x.toStringAsFixed(3)}',
+                      'y: ${currentQuaternion.y.toStringAsFixed(3)}',
+                      'z: ${currentQuaternion.z.toStringAsFixed(3)}',
+                      'w: ${currentQuaternion.w.toStringAsFixed(3)}',
+                    ]),
 
                     Divider(height: 30),
 
                     // Euler angles display
-                    _buildSection(
-                      'Euler Angles',
-                      [
-                        'Roll:  ${_radToDeg(currentEuler.roll)}',
-                        'Pitch: ${_radToDeg(currentEuler.pitch)}',
-                        'Yaw:   ${_radToDeg(currentEuler.yaw)}',
-                      ],
-                    ),
+                    _buildSection('Euler Angles', [
+                      'Roll:  ${_radToDeg(currentEuler.roll)}',
+                      'Pitch: ${_radToDeg(currentEuler.pitch)}',
+                      'Yaw:   ${_radToDeg(currentEuler.yaw)}',
+                    ]),
 
                     Divider(height: 30),
 
                     // 4D Rotations
-                    _buildSection(
-                      '4D Rotation Parameters',
-                      [
-                        'XY: ${rot4d['rot4dXY']?.toStringAsFixed(3) ?? '0.000'}',
-                        'XZ: ${rot4d['rot4dXZ']?.toStringAsFixed(3) ?? '0.000'}',
-                        'YZ: ${rot4d['rot4dYZ']?.toStringAsFixed(3) ?? '0.000'}',
-                        'XW: ${rot4d['rot4dXW']?.toStringAsFixed(3) ?? '0.000'}',
-                        'YW: ${rot4d['rot4dYW']?.toStringAsFixed(3) ?? '0.000'}',
-                        'ZW: ${rot4d['rot4dZW']?.toStringAsFixed(3) ?? '0.000'}',
-                      ],
-                    ),
+                    _buildSection('4D Rotation Parameters', [
+                      'XY: ${rot4d['rot4dXY']?.toStringAsFixed(3) ?? '0.000'}',
+                      'XZ: ${rot4d['rot4dXZ']?.toStringAsFixed(3) ?? '0.000'}',
+                      'YZ: ${rot4d['rot4dYZ']?.toStringAsFixed(3) ?? '0.000'}',
+                      'XW: ${rot4d['rot4dXW']?.toStringAsFixed(3) ?? '0.000'}',
+                      'YW: ${rot4d['rot4dYW']?.toStringAsFixed(3) ?? '0.000'}',
+                      'ZW: ${rot4d['rot4dZW']?.toStringAsFixed(3) ?? '0.000'}',
+                    ]),
 
                     Divider(height: 30),
 
                     // Controls help
-                    _buildSection(
-                      '🎮 Controls',
-                      [
-                        'Mouse: Click & drag',
-                        'W/S: Pitch up/down',
-                        'A/D: Yaw left/right',
-                        'Q/E: Roll left/right',
-                        'R: Reset',
-                        'Shift: Speed boost',
-                      ],
-                    ),
+                    _buildSection('🎮 Controls', [
+                      'Mouse: Click & drag',
+                      'W/S: Pitch up/down',
+                      'A/D: Yaw left/right',
+                      'Q/E: Roll left/right',
+                      'R: Reset',
+                      'Shift: Speed boost',
+                    ]),
                   ],
                 ),
               ),
@@ -236,16 +222,15 @@ class _EulerAnglesDemoState extends State<EulerAnglesDemo> {
           ),
         ),
         SizedBox(height: 8),
-        ...items.map((item) => Padding(
-              padding: EdgeInsets.only(left: 8, bottom: 4),
-              child: Text(
-                item,
-                style: TextStyle(
-                  fontFamily: 'monospace',
-                  fontSize: 14,
-                ),
-              ),
-            )),
+        ...items.map(
+          (item) => Padding(
+            padding: EdgeInsets.only(left: 8, bottom: 4),
+            child: Text(
+              item,
+              style: TextStyle(fontFamily: 'monospace', fontSize: 14),
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -269,9 +254,10 @@ class EducationalPainter extends CustomPainter {
 
     canvas.drawRect(
       Rect.fromLTWH(0, 0, size.width, size.height),
-      Paint()..shader = gradient.createShader(
-        Rect.fromLTWH(0, 0, size.width, size.height),
-      ),
+      Paint()
+        ..shader = gradient.createShader(
+          Rect.fromLTWH(0, 0, size.width, size.height),
+        ),
     );
 
     if (rot4d.isNotEmpty) {

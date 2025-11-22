@@ -63,7 +63,8 @@ class ShaderQuaternionSynchronizer {
   };
 
   // Callbacks for system updates
-  final void Function(String system, Map<String, double> parameters)? onSystemUpdate;
+  final void Function(String system, Map<String, double> parameters)?
+  onSystemUpdate;
 
   ShaderQuaternionSynchronizer({
     required this.bridge,

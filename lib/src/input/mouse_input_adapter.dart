@@ -78,10 +78,8 @@ class MouseInputAdapter {
   double _smoothedDeltaX = 0.0;
   double _smoothedDeltaY = 0.0;
 
-  MouseInputAdapter({
-    required this.bridge,
-    MouseInputConfig? config,
-  }) : config = config ?? const MouseInputConfig();
+  MouseInputAdapter({required this.bridge, MouseInputConfig? config})
+    : config = config ?? const MouseInputConfig();
 
   /// Start publishing mouse-based quaternions
   void start() {
@@ -118,10 +116,10 @@ class MouseInputAdapter {
     double deltaY = y - _lastMouseY;
 
     // Apply smoothing using exponential moving average
-    _smoothedDeltaX = _smoothedDeltaX * (1.0 - config.smoothing) +
-                      deltaX * config.smoothing;
-    _smoothedDeltaY = _smoothedDeltaY * (1.0 - config.smoothing) +
-                      deltaY * config.smoothing;
+    _smoothedDeltaX =
+        _smoothedDeltaX * (1.0 - config.smoothing) + deltaX * config.smoothing;
+    _smoothedDeltaY =
+        _smoothedDeltaY * (1.0 - config.smoothing) + deltaY * config.smoothing;
 
     // Apply sensitivity and inversion
     double rotX = _smoothedDeltaY * config.sensitivity;
@@ -198,11 +196,7 @@ class MouseInputAdapter {
 
   /// Get current rotation as Euler angles
   EulerAngles getCurrentEuler() {
-    return EulerAngles(
-      roll: _rotationZ,
-      pitch: _rotationX,
-      yaw: _rotationY,
-    );
+    return EulerAngles(roll: _rotationZ, pitch: _rotationX, yaw: _rotationY);
   }
 
   /// Get current rotation as quaternion

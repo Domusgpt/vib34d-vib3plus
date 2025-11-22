@@ -39,11 +39,7 @@ class _MobileTouchDemoState extends State<MobileTouchDemo> {
   int selectedGeometry = 0;
   bool showHelp = true;
 
-  final List<String> geometries = [
-    'Tesseract',
-    'Sphere',
-    'Grid',
-  ];
+  final List<String> geometries = ['Tesseract', 'Sphere', 'Grid'];
 
   @override
   void initState() {
@@ -95,25 +91,18 @@ class _MobileTouchDemoState extends State<MobileTouchDemo> {
             // Main visualization area
             GestureDetector(
               onPanStart: (_) => touchAdapter.handlePanStart(),
-              onPanUpdate: (details) => touchAdapter.handlePan(
-                details.delta.dx,
-                details.delta.dy,
-              ),
+              onPanUpdate: (details) =>
+                  touchAdapter.handlePan(details.delta.dx, details.delta.dy),
               onPanEnd: (_) => touchAdapter.handlePanEnd(),
               onScaleStart: (_) => touchAdapter.handleScaleStart(),
-              onScaleUpdate: (details) => touchAdapter.handleScale(
-                details.scale,
-                details.rotation,
-              ),
+              onScaleUpdate: (details) =>
+                  touchAdapter.handleScale(details.scale, details.rotation),
               child: Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.deepPurple[900]!,
-                      Colors.black,
-                    ],
+                    colors: [Colors.deepPurple[900]!, Colors.black],
                   ),
                 ),
                 child: CustomPaint(
@@ -137,10 +126,7 @@ class _MobileTouchDemoState extends State<MobileTouchDemo> {
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.black.withOpacity(0.7),
-                      Colors.transparent,
-                    ],
+                    colors: [Colors.black.withOpacity(0.7), Colors.transparent],
                   ),
                 ),
                 child: Row(
@@ -185,7 +171,10 @@ class _MobileTouchDemoState extends State<MobileTouchDemo> {
                             ),
                             SizedBox(height: 16),
                             _buildHelpItem('Swipe', 'Rotate the geometry'),
-                            _buildHelpItem('Two fingers', 'Rotate around Z-axis'),
+                            _buildHelpItem(
+                              'Two fingers',
+                              'Rotate around Z-axis',
+                            ),
                             _buildHelpItem('Release', 'Momentum continues'),
                             SizedBox(height: 16),
                             Text(
@@ -195,7 +184,8 @@ class _MobileTouchDemoState extends State<MobileTouchDemo> {
                             SizedBox(height: 16),
                             Center(
                               child: ElevatedButton(
-                                onPressed: () => setState(() => showHelp = false),
+                                onPressed: () =>
+                                    setState(() => showHelp = false),
                                 child: Text('Got it!'),
                               ),
                             ),
@@ -218,10 +208,7 @@ class _MobileTouchDemoState extends State<MobileTouchDemo> {
                   gradient: LinearGradient(
                     begin: Alignment.bottomCenter,
                     end: Alignment.topCenter,
-                    colors: [
-                      Colors.black.withOpacity(0.8),
-                      Colors.transparent,
-                    ],
+                    colors: [Colors.black.withOpacity(0.8), Colors.transparent],
                   ),
                 ),
                 child: Row(
@@ -282,9 +269,7 @@ class _MobileTouchDemoState extends State<MobileTouchDemo> {
               ),
             ),
           ),
-          Expanded(
-            child: Text(description),
-          ),
+          Expanded(child: Text(description)),
         ],
       ),
     );
@@ -296,10 +281,7 @@ class MobileVisualizationPainter extends CustomPainter {
   final int geometryType;
   final CanvasRenderer renderer = CanvasRenderer();
 
-  MobileVisualizationPainter({
-    required this.rot4d,
-    required this.geometryType,
-  });
+  MobileVisualizationPainter({required this.rot4d, required this.geometryType});
 
   @override
   void paint(Canvas canvas, Size size) {

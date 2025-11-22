@@ -65,11 +65,14 @@ class QuaternionUtils {
     Duration deltaTime,
   ) {
     final deltaQuat = multiply(current, conjugate(previous));
-    final angle = 2.0 *
+    final angle =
+        2.0 *
         math.atan2(
-          math.sqrt(deltaQuat.x * deltaQuat.x +
-              deltaQuat.y * deltaQuat.y +
-              deltaQuat.z * deltaQuat.z),
+          math.sqrt(
+            deltaQuat.x * deltaQuat.x +
+                deltaQuat.y * deltaQuat.y +
+                deltaQuat.z * deltaQuat.z,
+          ),
           deltaQuat.w,
         );
 
@@ -119,6 +122,5 @@ class EulerAngles {
   }
 
   @override
-  String toString() =>
-      'EulerAngles(roll: $roll, pitch: $pitch, yaw: $yaw)';
+  String toString() => 'EulerAngles(roll: $roll, pitch: $pitch, yaw: $yaw)';
 }

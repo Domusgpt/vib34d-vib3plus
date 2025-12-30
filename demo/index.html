@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIB34D XR Quaternion SDK - Interactive Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            overflow: hidden;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            height: 100vh;
+        }
+
+        .sidebar {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            overflow-y: auto;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .main-canvas {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        canvas {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 8px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #fff, #a8edea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 18px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: #a8edea;
+        }
+
+        .control-group {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            margin-bottom: 5px;
+            color: #a8edea;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        .value-display {
+            display: flex;
+            justify-content: space-between;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin-top: 5px;
+            color: #fff;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin: 5px 0;
+            border: none;
+            border-radius: 6px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .geometry-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .geometry-btn {
+            padding: 8px;
+            font-size: 11px;
+        }
+
+        .geometry-btn.active {
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+        }
+
+        .stats {
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 3px 0;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        .status-indicator.active {
+            background: #4ade80;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .info-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            font-size: 10px;
+            margin-left: 5px;
+        }
+
+        .description {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .quaternion-display {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 10px;
+            border-radius: 6px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+        }
+
+        .quaternion-row {
+            display: grid;
+            grid-template-columns: 30px 1fr;
+            margin: 3px 0;
+        }
+
+        .quaternion-label {
+            color: #a8edea;
+            font-weight: bold;
+        }
+
+        .quaternion-value {
+            color: #fff;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 5px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h1>🌀 VIB34D XR SDK</h1>
+            <p class="description">
+                Interactive demonstration of quaternion-driven 4D geometric visualization.
+                Adjust parameters to see real-time quaternion processing and 4D rotation.
+            </p>
+
+            <div class="control-group">
+                <h2>Status</h2>
+                <div class="stats-row">
+                    <span><span class="status-indicator active"></span>Pipeline Active</span>
+                    <span id="fps">0 FPS</span>
+                </div>
+                <div class="stats-row">
+                    <span>Frame Time</span>
+                    <span id="frameTime">0.0ms</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <h2>Geometry Selection <span class="info-badge" id="currentGeometry">0/24</span></h2>
+                <div class="geometry-grid">
+                    <button class="geometry-btn" data-index="0">Tetrahedron</button>
+                    <button class="geometry-btn" data-index="1">Hypercube</button>
+                    <button class="geometry-btn" data-index="2">Sphere</button>
+                    <button class="geometry-btn" data-index="3">Torus</button>
+                    <button class="geometry-btn" data-index="4">Klein</button>
+                    <button class="geometry-btn" data-index="5">Fractal</button>
+                    <button class="geometry-btn" data-index="6">Wave</button>
+                    <button class="geometry-btn" data-index="7">Crystal</button>
+                </div>
+                <button id="randomGeometry">🎲 Random Geometry</button>
+            </div>
+
+            <div class="control-group">
+                <h2>Quaternion Simulation</h2>
+                <label>Rotation Speed</label>
+                <input type="range" id="rotationSpeed" min="0" max="5" step="0.1" value="1">
+                <div class="value-display">
+                    <span>Speed</span>
+                    <span id="speedValue">1.0x</span>
+                </div>
+
+                <label>Motion Energy</label>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="energyBar" style="width: 0%"></div>
+                </div>
+                <div class="value-display">
+                    <span>Energy</span>
+                    <span id="energyValue">0.0%</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <h2>4D Rotation Parameters</h2>
+                <div class="quaternion-display">
+                    <div class="quaternion-row">
+                        <span class="quaternion-label">XY:</span>
+                        <span class="quaternion-value" id="rot4dXY">0.000</span>
+                    </div>
+                    <div class="quaternion-row">
+                        <span class="quaternion-label">XZ:</span>
+                        <span class="quaternion-value" id="rot4dXZ">0.000</span>
+                    </div>
+                    <div class="quaternion-row">
+                        <span class="quaternion-label">YZ:</span>
+                        <span class="quaternion-value" id="rot4dYZ">0.000</span>
+                    </div>
+                    <div class="quaternion-row">
+                        <span class="quaternion-label">XW:</span>
+                        <span class="quaternion-value" id="rot4dXW">0.000</span>
+                    </div>
+                    <div class="quaternion-row">
+                        <span class="quaternion-label">YW:</span>
+                        <span class="quaternion-value" id="rot4dYW">0.000</span>
+                    </div>
+                    <div class="quaternion-row">
+                        <span class="quaternion-label">ZW:</span>
+                        <span class="quaternion-value" id="rot4dZW">0.000</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <h2>Quaternion State</h2>
+                <div class="quaternion-display">
+                    <div class="quaternion-row">
+                        <span class="quaternion-label">x:</span>
+                        <span class="quaternion-value" id="qx">0.000</span>
+                    </div>
+                    <div class="quaternion-row">
+                        <span class="quaternion-label">y:</span>
+                        <span class="quaternion-value" id="qy">0.000</span>
+                    </div>
+                    <div class="quaternion-row">
+                        <span class="quaternion-label">z:</span>
+                        <span class="quaternion-value" id="qz">0.000</span>
+                    </div>
+                    <div class="quaternion-row">
+                        <span class="quaternion-label">w:</span>
+                        <span class="quaternion-value" id="qw">1.000</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <h2>Euler Angles</h2>
+                <div class="quaternion-display">
+                    <div class="quaternion-row">
+                        <span class="quaternion-label">Roll:</span>
+                        <span class="quaternion-value" id="eulerRoll">0.0°</span>
+                    </div>
+                    <div class="quaternion-row">
+                        <span class="quaternion-label">Pitch:</span>
+                        <span class="quaternion-value" id="eulerPitch">0.0°</span>
+                    </div>
+                    <div class="quaternion-row">
+                        <span class="quaternion-label">Yaw:</span>
+                        <span class="quaternion-value" id="eulerYaw">0.0°</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <button id="resetView">🔄 Reset View</button>
+                <button id="pauseAnimation">⏸ Pause</button>
+            </div>
+        </div>
+
+        <div class="main-canvas">
+            <canvas id="canvas" width="800" height="800"></canvas>
+        </div>
+    </div>
+
+    <script src="demo.js"></script>
+</body>
+</html>

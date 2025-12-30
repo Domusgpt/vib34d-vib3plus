@@ -1,0 +1,286 @@
+{
+  "mcpServers": {
+    "vib34d": {
+      "command": "node",
+      "args": [".claude/mcp/vib34d-mcp-server.js"],
+      "description": "VIB34D SDK Model Context Protocol server for 4D visualization generation",
+      "version": "1.0.0",
+      "capabilities": {
+        "tools": [
+          {
+            "name": "vib34d_create_project",
+            "description": "Create a new VIB34D visualization project",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Project name"
+                },
+                "template": {
+                  "type": "string",
+                  "enum": [
+                    "web-mouse",
+                    "web-touch",
+                    "mobile-touch",
+                    "desktop-keyboard",
+                    "educational",
+                    "gallery"
+                  ],
+                  "description": "Project template to use"
+                },
+                "geometry": {
+                  "type": "string",
+                  "enum": ["tesseract", "sphere", "grid", "custom"],
+                  "description": "Initial geometry type"
+                },
+                "color": {
+                  "type": "string",
+                  "description": "Primary color (CSS color name or hex)"
+                }
+              },
+              "required": ["name", "template"]
+            }
+          },
+          {
+            "name": "vib34d_add_input",
+            "description": "Add an input adapter to the project",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": ["mouse", "touch", "keyboard", "gamepad", "motion"],
+                  "description": "Input adapter type"
+                },
+                "sensitivity": {
+                  "type": "number",
+                  "description": "Input sensitivity (0.001 to 0.1)"
+                },
+                "smoothing": {
+                  "type": "number",
+                  "description": "Smoothing factor (0.0 to 1.0)"
+                },
+                "options": {
+                  "type": "object",
+                  "description": "Additional adapter-specific options"
+                }
+              },
+              "required": ["type"]
+            }
+          },
+          {
+            "name": "vib34d_add_geometry",
+            "description": "Add a geometry renderer to the project",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": ["tesseract", "sphere", "grid", "custom"],
+                  "description": "Geometry type"
+                },
+                "color": {
+                  "type": "string",
+                  "description": "Color (CSS color name or hex)"
+                },
+                "scale": {
+                  "type": "number",
+                  "description": "Scale factor"
+                },
+                "detail": {
+                  "type": "string",
+                  "enum": ["low", "medium", "high"],
+                  "description": "Level of detail"
+                }
+              },
+              "required": ["type"]
+            }
+          },
+          {
+            "name": "vib34d_generate_code",
+            "description": "Generate VIB34D visualization code",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "description": {
+                  "type": "string",
+                  "description": "Natural language description of what to build"
+                },
+                "platform": {
+                  "type": "string",
+                  "enum": ["flutter-web", "flutter-mobile", "flutter-desktop", "react", "vue", "angular"],
+                  "description": "Target platform"
+                },
+                "features": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": ["fps-counter", "data-display", "reset-button", "color-picker", "geometry-switcher"]
+                  },
+                  "description": "Additional features to include"
+                }
+              },
+              "required": ["description", "platform"]
+            }
+          },
+          {
+            "name": "vib34d_explain_concept",
+            "description": "Explain a quaternion or 4D rotation concept",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "concept": {
+                  "type": "string",
+                  "enum": [
+                    "quaternion",
+                    "euler-angles",
+                    "4d-rotation",
+                    "gimbal-lock",
+                    "slerp",
+                    "conjugate",
+                    "normalization",
+                    "rotation-synthesis"
+                  ],
+                  "description": "Concept to explain"
+                },
+                "level": {
+                  "type": "string",
+                  "enum": ["beginner", "intermediate", "advanced"],
+                  "description": "Explanation depth"
+                }
+              },
+              "required": ["concept"]
+            }
+          },
+          {
+            "name": "vib34d_debug_quaternion",
+            "description": "Debug quaternion-related issues",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "quaternion": {
+                  "type": "object",
+                  "properties": {
+                    "x": { "type": "number" },
+                    "y": { "type": "number" },
+                    "z": { "type": "number" },
+                    "w": { "type": "number" }
+                  },
+                  "description": "Quaternion values to debug"
+                },
+                "issue": {
+                  "type": "string",
+                  "description": "Description of the problem"
+                }
+              },
+              "required": ["quaternion"]
+            }
+          },
+          {
+            "name": "vib34d_optimize",
+            "description": "Suggest optimizations for VIB34D visualization",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "description": "Code to optimize"
+                },
+                "target_fps": {
+                  "type": "number",
+                  "description": "Target FPS (e.g., 60)"
+                },
+                "platform": {
+                  "type": "string",
+                  "enum": ["web", "mobile", "desktop"],
+                  "description": "Target platform"
+                }
+              },
+              "required": ["code"]
+            }
+          },
+          {
+            "name": "vib34d_convert_code",
+            "description": "Convert between Dart and JavaScript implementations",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "description": "Code to convert"
+                },
+                "from": {
+                  "type": "string",
+                  "enum": ["dart", "javascript", "typescript"],
+                  "description": "Source language"
+                },
+                "to": {
+                  "type": "string",
+                  "enum": ["dart", "javascript", "typescript", "react", "vue", "angular"],
+                  "description": "Target language/framework"
+                }
+              },
+              "required": ["code", "from", "to"]
+            }
+          }
+        ],
+        "resources": [
+          {
+            "uri": "vib34d://templates",
+            "name": "Project Templates",
+            "description": "Available VIB34D project templates",
+            "mimeType": "application/json"
+          },
+          {
+            "uri": "vib34d://examples",
+            "name": "Code Examples",
+            "description": "VIB34D code examples and patterns",
+            "mimeType": "text/markdown"
+          },
+          {
+            "uri": "vib34d://docs",
+            "name": "SDK Documentation",
+            "description": "VIB34D SDK documentation",
+            "mimeType": "text/markdown"
+          }
+        ],
+        "prompts": [
+          {
+            "name": "create_visualization",
+            "description": "Interactive prompt to create a visualization",
+            "arguments": [
+              {
+                "name": "type",
+                "description": "Type of visualization",
+                "required": true
+              }
+            ]
+          },
+          {
+            "name": "debug_rotation",
+            "description": "Debug quaternion rotation issues",
+            "arguments": [
+              {
+                "name": "issue_description",
+                "description": "Description of the rotation issue",
+                "required": true
+              }
+            ]
+          },
+          {
+            "name": "optimize_performance",
+            "description": "Optimize visualization performance",
+            "arguments": [
+              {
+                "name": "current_fps",
+                "description": "Current FPS",
+                "required": false
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
